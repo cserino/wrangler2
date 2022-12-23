@@ -124,6 +124,8 @@ export type DevProps = {
 	tsconfig: string | undefined;
 	upstreamProtocol: "https" | "http";
 	localProtocol: "https" | "http";
+	localHttpsKeyPath: string | undefined;
+	localHttpsCertPath: string | undefined;
 	localUpstream: string | undefined;
 	localPersistencePath: string | null;
 	liveReload: boolean;
@@ -354,6 +356,8 @@ function DevSession(props: DevSessionProps) {
 			crons={props.crons}
 			queueConsumers={props.queueConsumers}
 			localProtocol={props.localProtocol}
+			localHttpsKeyPath={props.localHttpsKeyPath}
+			localHttpsCertPath={props.localHttpsCertPath}
 			localUpstream={props.localUpstream}
 			logPrefix={props.logPrefix}
 			inspect={props.inspect}

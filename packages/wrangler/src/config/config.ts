@@ -212,6 +212,20 @@ export interface DevConfig {
 	local_protocol: "http" | "https";
 
 	/**
+	 * When `local_protocol` is "https", this can be used to set a TLS signing key
+   *
+   * Otherwise, wrangler will generate a self-signed certificate
+	 */
+  local_https_key_path: string | undefined;
+
+	/**
+	 * When `local_protocol` is "https", this can be used to set a TLS signing certificate
+   *
+   * Otherwise, wrangler will generate a self-signed certificate
+	 */
+  local_https_cert_path: string | undefined;
+
+	/**
 	 * Protocol that wrangler dev forwards requests on
 	 *
 	 * Setting this to `http` is not currently implemented.

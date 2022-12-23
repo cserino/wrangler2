@@ -370,6 +370,8 @@ function normalizeAndValidateDev(
 		port,
 		inspector_port,
 		local_protocol = "http",
+		local_https_key_path,
+		local_https_cert_path,
 		upstream_protocol = "https",
 		host,
 		...rest
@@ -396,13 +398,27 @@ function normalizeAndValidateDev(
 	validateOptionalProperty(
 		diagnostics,
 		"dev",
+		"local_https_key_path",
+		local_https_key_path,
+		"string"
+	);
+	validateOptionalProperty(
+		diagnostics,
+		"dev",
+		"local_https_cert_path",
+		local_https_cert_path,
+		"string"
+	);
+	validateOptionalProperty(
+		diagnostics,
+		"dev",
 		"upstream_protocol",
 		upstream_protocol,
 		"string",
 		["http", "https"]
 	);
 	validateOptionalProperty(diagnostics, "dev", "host", host, "string");
-	return { ip, port, inspector_port, local_protocol, upstream_protocol, host };
+	return { ip, port, inspector_port, local_protocol, local_https_key_path, local_https_cert_path, upstream_protocol, host };
 }
 
 /**

@@ -68,6 +68,8 @@ export interface LocalProps {
 	crons: Config["triggers"]["crons"];
 	queueConsumers: Config["queues"]["consumers"];
 	localProtocol: "http" | "https";
+	localHttpsKeyPath: string | undefined;
+	localHttpsCertPath: string | undefined;
 	localUpstream: string | undefined;
 	inspect: boolean;
 	onReady: ((ip: string, port: number) => void) | undefined;
@@ -119,6 +121,8 @@ function useLocalWorker({
 	crons,
 	queueConsumers,
 	localProtocol,
+	localHttpsKeyPath,
+	localHttpsCertPath,
 	localUpstream,
 	inspect,
 	onReady,
@@ -204,6 +208,8 @@ function useLocalWorker({
 				port: initialPort,
 				scriptPath,
 				localProtocol,
+				localHttpsKeyPath,
+				localHttpsCertPath,
 				ip: initialIp,
 				format,
 				rules,
@@ -564,6 +570,8 @@ interface SetupMiniflareOptionsProps {
 	port: number;
 	scriptPath: string;
 	localProtocol: "http" | "https";
+	localHttpsKeyPath: string | undefined;
+	localHttpsCertPath: string | undefined;
 	ip: string;
 	format: CfScriptFormat;
 	rules: Config["rules"];
@@ -596,6 +604,8 @@ export function setupMiniflareOptions({
 	port,
 	scriptPath,
 	localProtocol,
+	localHttpsKeyPath,
+	localHttpsCertPath,
 	ip,
 	format,
 	rules,
@@ -631,7 +641,9 @@ export function setupMiniflareOptions({
 		name: workerName,
 		port,
 		scriptPath,
-		https: localProtocol === "https",
+		https: localProtocol === "https" && !(localHttpsKeyPath && localHttpsCertPath),
+		httpsKeyPath: localProtocol === "https" ? localHttpsKeyPath : undefined,
+		httpsCertPath: localProtocol === "https" ? localHttpsCertPath : undefined,
 		host: ip,
 		modules: format === "modules",
 		modulesRules: (rules || [])
